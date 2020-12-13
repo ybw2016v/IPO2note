@@ -5,7 +5,7 @@ import json
 import time
 from ipo import getipoinfo
 
-key=""
+key="Z9MLaY9UKJbj18eHDp8r1fdeRN8yKBn4"
 URL="https://m.dogcraft.cn/api/notes/create"
 
 
@@ -31,7 +31,7 @@ for dog_list in dog_json:
     dog_date=dog_list['STARTDATE']
     dog_dates=time.strptime(dog_date,"%Y-%m-%dT%H:%M:%S")
     dog_localtime = time.localtime(time.time())
-    if dog_localtime.tm_mday==dog_dates.tm_mday:
+    if dog_localtime.tm_yday==dog_dates.tm_yday:
         dog_l={}
         dog_l['cname']=dog_list['CORRESNAME']
         dog_l['DM']=dog_list['SWAPSCODE']
@@ -69,9 +69,9 @@ dog_str='今日打新 {}\n可转债:\n{}\n新股：\n{}'.format(dog_today,dog_s,
 
 # print(dog_str)
 
-if time.localtime().tm_wday <= 4:
+if time.localtime().tm_wday <= 10:
     print('可能是交易日')
-    payload={'text':dog_str,"localOnly":True,"visibility":"public","viaMobile":False,"i":key}
+    payload={'text':dog_str,"localOnly":False,"visibility":"public","viaMobile":False,"i":key}
 # payload={'text':dog_str,"localOnly":True,"visibility":"public","viaMobile":False,"i":key}
     sd=r.post(URL,json=payload)
     print(sd.text)
