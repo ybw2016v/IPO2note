@@ -5,7 +5,7 @@ import json
 import time
 from ipo import getipoinfo
 
-key="Z9MLaY9UKJbj18eHDp8r1fdeRN8yKBn4"
+key=""
 URL="https://m.dogcraft.cn/api/notes/create"
 
 
