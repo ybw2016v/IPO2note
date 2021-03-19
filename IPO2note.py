@@ -69,7 +69,7 @@ dog_str='今日打新 {}\n可转债:\n{}\n新股：\n{}'.format(dog_today,dog_s,
 
 # print(dog_str)
 
-if time.localtime().tm_wday <= 10:
+if time.localtime().tm_wday <= 4:
     print('可能是交易日')
     payload={'text':dog_str,"localOnly":False,"visibility":"public","viaMobile":False,"i":key}
 # payload={'text':dog_str,"localOnly":True,"visibility":"public","viaMobile":False,"i":key}
