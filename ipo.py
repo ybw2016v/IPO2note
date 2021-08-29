@@ -7,7 +7,7 @@ def getipoinfo():
     """
     获取当日新股
     """
-    dog_re=re.compile('"data":(.*),"pages"')
+    dog_re=re.compile('data":(.*)],')
     dog_re2=re.compile('data:[(.*)]')
 
     dog_cont=r.get("http://data.eastmoney.com/xg/xg/default.html")
@@ -21,7 +21,7 @@ def getipoinfo():
     # print(dog_html2)
     dog_e=dog_re.findall(dog_html2)
     # print(dog_e[0])
-    dog_f=json.loads(dog_e[0])
+    dog_f=json.loads(dog_e[0]+"]")
     # for sdk in dog_f:
     #     print(sdk)
     #     pass
@@ -29,30 +29,30 @@ def getipoinfo():
     dog_info=[]
 
     for dog_list in dog_f:
-        dog_date=dog_list['purchasedate']
-        dog_dates=time.strptime(dog_date,"%Y-%m-%dT%H:%M:%S")
+        dog_date=dog_list['APPLY_DATE']
+        dog_dates=time.strptime(dog_date,"%Y-%m-%d %H:%M:%S")
         dog_localtime = time.localtime(time.time())
         # print(dog_dates.tm_mday)
         if dog_localtime.tm_yday==dog_dates.tm_yday:
             dog_l={}
-            dog_l['name']=dog_list['securityshortname']
-            dog_l['DM']=dog_list['subcode']
-            dog_l['sc']=dog_list['sc']
-            if dog_l['sc']=='cyb':
-                dog_l['sc']='创业板'
-                pass
-            if dog_l['sc']=='zxb':
-                dog_l['sc']='中小板'
-                pass
-            if dog_l['sc']=='kcb':
-                dog_l['sc']='科创板'
-                pass
-            if dog_l['sc']=='sh':
-                dog_l['sc']='上海'
-                pass
-            if dog_l['sc']=='sz':
-                dog_l['sc']='深圳'
-                pass
+            dog_l['name']=dog_list['SECURITY_NAME']
+            dog_l['DM']=dog_list['SECURITY_CODE']
+            dog_l['sc']=dog_list['TRADE_MARKET']
+            # if dog_l['sc']=='cyb':
+            #     dog_l['sc']='创业板'
+            #     pass
+            # if dog_l['sc']=='zxb':
+            #     dog_l['sc']='中小板'
+            #     pass
+            # if dog_l['sc']=='kcb':
+            #     dog_l['sc']='科创板'
+            #     pass
+            # if dog_l['sc']=='sh':
+            #     dog_l['sc']='上海'
+            #     pass
+            # if dog_l['sc']=='sz':
+            #     dog_l['sc']='深圳'
+            #     pass
             # dog_l['']=dog_list['']
             dog_info.append(dog_l)
             pass

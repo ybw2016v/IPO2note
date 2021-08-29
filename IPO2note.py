@@ -11,30 +11,30 @@ URL="https://m.dogcraft.cn/api/notes/create"
 
 
 dog_re=re.compile('data:(.*),font:{')
-dog_re2=re.compile('data:[(.*)]')
+dog_re2=re.compile('data":(.*)],')
 
 dog_cont=r.get("http://data.eastmoney.com/kzz/default.html")
 dog_html=dog_cont.text
-# f=open('sd.html','wb')
+# f=open('sd.html','w')
 # f.write(dog_html)
 # f.close()
 # print(dog_html)
-dog_res=dog_re.findall(dog_html)
+dog_res=dog_re2.findall(dog_html)
 # print(dog_res[0])
 # dogres2=dog_re2.findall(dog_res[0])
 # print(dogres2)
-dog_json=json.loads(dog_res[0])
+dog_json=json.loads(dog_res[0]+"]")
 # print(dog_json[0])
 dog_info=[]
 
 for dog_list in dog_json:
-    dog_date=dog_list['STARTDATE']
-    dog_dates=time.strptime(dog_date,"%Y-%m-%dT%H:%M:%S")
+    dog_date=dog_list['PUBLIC_START_DATE']
+    dog_dates=time.strptime(dog_date,"%Y-%m-%d %H:%M:%S")
     dog_localtime = time.localtime(time.time())
     if dog_localtime.tm_yday==dog_dates.tm_yday:
         dog_l={}
-        dog_l['cname']=dog_list['CORRESNAME']
-        dog_l['DM']=dog_list['SWAPSCODE']
+        dog_l['cname']=dog_list['SECURITY_NAME_ABBR']
+        dog_l['DM']=dog_list['SECURITY_CODE']
         # dog_l['']=dog_list['']
         # dog_l['']=dog_list['']
         dog_info.append(dog_l)
