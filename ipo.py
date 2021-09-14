@@ -8,7 +8,7 @@ def getipoinfo():
     获取当日新股
     """
     dog_re=re.compile('data":(.*)],')
-    dog_re2=re.compile('data:[(.*)]')
+    dog_re2=re.compile('a":\[(.*?)\],')
 
     dog_cont=r.get("http://data.eastmoney.com/xg/xg/default.html")
     dog_html=dog_cont.content
@@ -16,12 +16,14 @@ def getipoinfo():
     # f.write(dog_html)
     # f.close()
     # print(dog_html)
+    # f=open("default.html")
+    # dog_html2=f.read()
 
     dog_html2=str(dog_html,'utf-8')
     # print(dog_html2)
-    dog_e=dog_re.findall(dog_html2)
+    dog_e=dog_re2.findall(dog_html2)
     # print(dog_e[0])
-    dog_f=json.loads(dog_e[0]+"]")
+    dog_f=json.loads("["+dog_e[0]+"]")
     # for sdk in dog_f:
     #     print(sdk)
     #     pass
